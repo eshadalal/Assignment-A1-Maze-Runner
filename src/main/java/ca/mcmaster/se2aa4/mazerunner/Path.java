@@ -7,7 +7,24 @@ public class Path {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private String sequenceOfMoves;
+    private Maze maze;
 
+    public Path(String sequenceOfMoves) {
+        this.sequenceOfMoves = sequenceOfMoves;
+    }
+
+    public String getSequenceOfMoves() {
+        return sequenceOfMoves;
+    }
+
+    public String findSequenceOfMoves() { 
+        // to implement
+    }
+
+    public String factorizedPath() { 
+        // to implement
+    }
 
 }
 

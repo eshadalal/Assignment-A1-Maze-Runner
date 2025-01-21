@@ -53,4 +53,9 @@ public class Maze {
         }
     }
 
+    /* public Boolean validatePath(String pathToValidate) { 
+        // to implement
+    }
+*/
+
 }

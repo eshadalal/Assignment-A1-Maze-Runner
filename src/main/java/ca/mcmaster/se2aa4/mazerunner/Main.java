@@ -32,7 +32,32 @@ public class Main {
             logger.info("**** Reading the maze from file " + inputFile);
             BufferedReader mazeFile = new BufferedReader(new FileReader(inputFile));
 
+            String line;
+            while ((line = mazeFile.readLine()) != null) {
+                for (int idx = 0; idx < line.length(); idx++) {
+                    if (line.charAt(idx) == '#') {
+                        System.out.print("WALL ");
+                    } else if (line.charAt(idx) == ' ') {
+                        System.out.print("PASS ");
+                    }
+                }
+                
+                System.out.print(System.lineSeparator());
+            }
+
             Maze maze = new Maze(inputFile); 
+
+            if (path != null) { // if path is given by user, then validate it
+                Path pathToValidate = new Path(path);
+                /* if (maze.validatePath(pathToValidate)) {
+                    System.out.println("correct path");
+                } else {
+                    System.out.println("incorrect path");
+                } */
+            } else { 
+                // maze.solvePath(); 
+                // System.out.println(maze.factorizedPath());
+            }
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");

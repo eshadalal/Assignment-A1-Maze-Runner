@@ -7,6 +7,46 @@ public class Direction {
 
     private static final Logger logger = LogManager.getLogger();
 
-}
+    private char direction; 
 
-// track current direction and decide what directions are available to move to next based on structure of maze 
+    public Direction(char direction) {
+        this.direction = direction;
+    }
+
+    public char getDirection() {
+        return direction;
+    }
+
+    public void setDirection(char direction) {
+        this.direction = direction;
+    }
+
+    public void turnRight() {
+        switch (direction) {
+            case 'F':
+                direction = 'R';
+                break;
+            case 'R':
+                direction = 'L';
+                break;
+            case 'L':
+                direction = 'F';
+                break;
+        }
+    }
+
+    public void turnLeft() {
+        switch (direction) {
+            case 'F':
+                direction = 'L';
+                break;
+            case 'R':
+                direction = 'F';
+                break;
+            case 'L':
+                direction = 'R';
+                break;
+        }
+    }
+
+}
