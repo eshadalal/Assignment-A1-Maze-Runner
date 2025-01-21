@@ -14,7 +14,7 @@ public class Path {
         this.sequenceOfMoves = sequenceOfMoves;
     }
 
-    public String getSequenceOfMoves() {
+    /* public String getSequenceOfMoves() {
         return sequenceOfMoves;
     }
 
@@ -26,7 +26,7 @@ public class Path {
         // to implement
     }
 
-}
 
-
+*/
+} 
 // keep track of the sequence of moves made to reach the exit of the maze and returns the path in either format

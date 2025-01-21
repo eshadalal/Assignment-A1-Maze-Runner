@@ -68,4 +68,3 @@ public class Main {
         logger.info("** End of MazeRunner");
     }
 }
-
