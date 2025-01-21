@@ -19,30 +19,25 @@ public class Main {
 
         Options options = new Options();
 
-        // add i option
-        options.addOption("i", false, "provided maze");
+        options.addOption("i", true, "maze file to read");
+        options.addOption("p", true, "path to validate");
 
         try {
 
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
+            String path = cmd.getOptionValue("p");
+            String inputFile = cmd.getOptionValue("i"); 
 
-            logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
-            BufferedReader reader = new BufferedReader(new FileReader(cmd.getOptionValue("i")));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.trace("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.trace("PASS ");
-                    }
-                }
-                logger.trace(System.lineSeparator());
-            }
+            logger.info("**** Reading the maze from file " + inputFile);
+            BufferedReader mazeFile = new BufferedReader(new FileReader(inputFile));
+
+            Maze maze = new Maze(inputFile); 
+
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
+
         logger.info("**** Computing path");
         logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
