@@ -2,7 +2,6 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class Maze {
         return exitColumn;
     }
 
-    public Maze(String mazeFile) throws IOException {
+    public Maze(String mazeFile) throws Exception {
         try (BufferedReader reader = new BufferedReader(new FileReader(mazeFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
