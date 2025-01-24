@@ -7,26 +7,45 @@ public class Path {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private String sequenceOfMoves;
+    private String path;
     private Maze maze;
 
-    public Path(String sequenceOfMoves) {
-        this.sequenceOfMoves = sequenceOfMoves;
+    public Path(Maze maze) {
+        this.maze = maze;
     }
 
-    /* public String getSequenceOfMoves() {
-        return sequenceOfMoves;
+    public String getPath() {
+        return this.path;
     }
 
-    public String findSequenceOfMoves() { 
-        // to implement
+    public String findPath() {
+
+        int entryColumn = maze.getEntryColumn();
+        int entryRow = maze.getEntryRow(); 
+        int exitColumn = maze.getExitColumn(); 
+        int exitRow = maze.getExitRow();
+
+        System.out.println("Entry position: (" + entryRow + ", " + entryColumn + ")");
+        System.out.println("Exit position: (" + exitRow + ", " + exitColumn + ")");
+
+        StringBuilder sequenceOfMoves = new StringBuilder();
+
+        if (entryRow == exitRow) {  // if entry and exit are in same row then it is a straight path
+            int numberOfMoves = exitColumn - entryColumn;
+            for (int i = 0; i < numberOfMoves; i++) {
+                sequenceOfMoves.append('F');  // simply move forward
+            }
+        }
+
+        // extend to more complex maze paths
+
+        return sequenceOfMoves.toString();
     }
 
-    public String factorizedPath() { 
+}
+    /* public String factorizedPath() { 
         // to implement
     }
 
 
 */
-} 
-// keep track of the sequence of moves made to reach the exit of the maze and returns the path in either format

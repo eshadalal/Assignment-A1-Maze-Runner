@@ -22,8 +22,10 @@ public class Main {
         options.addOption("i", true, "maze file to read");
         options.addOption("p", true, "path to validate");
 
-        try {
+        String displayPath = ""; 
 
+        try {
+            
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
             String path = cmd.getOptionValue("p");
@@ -46,25 +48,15 @@ public class Main {
             }
 
             Maze maze = new Maze(inputFile); 
-
-            if (path != null) { // if path is given by user, then validate it
-                Path pathToValidate = new Path(path);
-                /* if (maze.validatePath(pathToValidate)) {
-                    System.out.println("correct path");
-                } else {
-                    System.out.println("incorrect path");
-                } */
-            } else { 
-                // maze.solvePath(); 
-                // System.out.println(maze.factorizedPath());
-            }
-
+            Path generatePath = new Path(maze);
+            displayPath = generatePath.findPath();
+        
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
 
         logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
+        System.out.println(displayPath);  
         logger.info("** End of MazeRunner");
     }
 }

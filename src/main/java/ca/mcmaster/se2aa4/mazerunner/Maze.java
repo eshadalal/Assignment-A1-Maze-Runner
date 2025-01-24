@@ -18,7 +18,23 @@ public class Maze {
     private int entryRow; 
     private int entryColumn = 0;
     private int exitRow; 
-    private int exitColumn = getColumns() - 1;
+    private int exitColumn;
+
+    public int getEntryRow() {
+        return entryRow;
+    } 
+
+    public int getExitRow() {
+        return exitRow;
+    }
+
+    public int getEntryColumn() {
+        return entryColumn;
+    }
+
+    public int getExitColumn() {
+        return exitColumn;
+    }
 
     public Maze(String mazeFile) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(mazeFile))) {
@@ -27,6 +43,8 @@ public class Maze {
                 mazetoSolve.add(line);
             }
         }
+        findEntry();
+        findExit();
     }
 
     public int getRows() {
@@ -41,6 +59,7 @@ public class Maze {
         for (int row = 0; row < getRows(); row++) { 
             if (mazetoSolve.get(row).charAt(0) == ' ') { // first column of maze
                 entryRow = row; 
+                entryColumn = 0; 
             }
         }
     } 
@@ -49,6 +68,7 @@ public class Maze {
         for (int row = 0; row < getRows(); row++) { 
             if (mazetoSolve.get(row).charAt(getColumns() - 1) == ' ') { // last column of maze
                 exitRow = row; 
+                exitColumn = getColumns() - 1;
             }   
         }
     }
