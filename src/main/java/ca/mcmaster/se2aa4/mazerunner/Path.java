@@ -21,31 +21,62 @@ public class Path {
     public String findPath() {
 
         int entryColumn = maze.getEntryColumn();
-        int entryRow = maze.getEntryRow(); 
-        int exitColumn = maze.getExitColumn(); 
+        int entryRow = maze.getEntryRow();
+        int exitColumn = maze.getExitColumn();
         int exitRow = maze.getExitRow();
-
-        System.out.println("Entry position: (" + entryRow + ", " + entryColumn + ")");
-        System.out.println("Exit position: (" + exitRow + ", " + exitColumn + ")");
 
         StringBuilder sequenceOfMoves = new StringBuilder();
 
-        if (entryRow == exitRow) {  // if entry and exit are in same row then it is a straight path
-            int numberOfMoves = exitColumn - entryColumn;
-            for (int i = 0; i < numberOfMoves; i++) {
-                sequenceOfMoves.append('F');  // simply move forward
+        return sequenceOfMoves.toString();
+
+    }
+
+    /* while (entryRow != exitRow && entryColumn != exitColumn) {  // while not at the exit 
+
+
+
+
+        }
+
+
+        return sequenceOfMoves.toString();
+    } */
+    public String factorizedPath(String sequenceOfMoves) {
+
+        int forward_count = 1;
+        int left_count = 1;
+        int right_count = 1;
+
+        for (int i = 0; i < sequenceOfMoves.length(); i++) {
+
+            if (sequenceOfMoves.charAt(i) == 'F' && sequenceOfMoves.charAt(i + 1) == 'F') {
+                forward_count++;
+            } else if (sequenceOfMoves.charAt(i) == 'L' && sequenceOfMoves.charAt(i + 1) == 'L') {
+                left_count++;
+            } else if (sequenceOfMoves.charAt(i) == 'R' && sequenceOfMoves.charAt(i + 1) == 'R') {
+                right_count++;
             }
         }
 
-        // extend to more complex maze paths
+        return forward_count + "F" + left_count + "L" + right_count + "R";
 
-        return sequenceOfMoves.toString();
     }
 
+    public Boolean validatePath(String pathToValidate) {
+
+        for (int i = 0; i < pathToValidate.length(); i++) {
+            if (pathToValidate.charAt(i) != 'F' && pathToValidate.charAt(i) != 'L' && pathToValidate.charAt(i) != 'R' && pathToValidate.charAt(i) != ' ') {
+                return false;
+            }
+
+            if (pathToValidate.charAt(i) == ' ') {
+                continue; // skip spaces
+            }
+
+            // changeDirection(pathToValidate.charAt(i));
+
+        }
+
+        return true;
+    }
 }
-    /* public String factorizedPath() { 
-        // to implement
-    }
-
-
-*/

@@ -59,6 +59,7 @@ public class Maze {
             if (mazetoSolve.get(row).charAt(0) == ' ') { // first column of maze
                 entryRow = row; 
                 entryColumn = 0; 
+                break;
             }
         }
     } 
@@ -68,13 +69,9 @@ public class Maze {
             if (mazetoSolve.get(row).charAt(getColumns() - 1) == ' ') { // last column of maze
                 exitRow = row; 
                 exitColumn = getColumns() - 1;
+                break;
             }   
         }
     }
-
-    /* public Boolean validatePath(String pathToValidate) { 
-        // to implement
-    }
-*/
 
 }

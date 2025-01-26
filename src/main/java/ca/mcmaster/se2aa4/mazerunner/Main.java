@@ -31,10 +31,10 @@ public class Main {
             String path = cmd.getOptionValue("p");
             String inputFile = cmd.getOptionValue("i"); 
 
-            System.out.println("**** Reading the maze from file " + inputFile);
+            logger.info("**** Reading the maze from file " + inputFile);
             BufferedReader mazeFile = new BufferedReader(new FileReader(inputFile));
 
-            String line;
+            String line; // to be removed 
             while ((line = mazeFile.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
                     if (line.charAt(idx) == '#') {
@@ -48,22 +48,17 @@ public class Main {
             }
 
             Maze maze = new Maze(inputFile); 
-            Path generatePath = new Path(maze);
-            displayPath = generatePath.findPath();
+            // displayPath = generatePath.findPath();
 
-            /* if (path != null) { if path is given by user, then validate it
-                Path pathToValidate = new Path(path);
-                /* if (maze.validatePath(pathToValidate)) {
+            if (path != null) { 
+                Path pathToValidate = new Path(maze);
+                if (pathToValidate.validatePath(path)) {
                     System.out.println("correct path");
                 } else {
                     System.out.println("incorrect path");
-                } 
-            } else { 
-                maze.solvePath(); 
-                System.out.println(maze.factorizedPath());
-            }
-            */
-        
+                }         
+            } 
+            
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
