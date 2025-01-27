@@ -13,7 +13,7 @@ public class Maze {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private List<String> mazetoSolve = new ArrayList<>();
+    private List<String> mazeToSolve = new ArrayList<>();
     private int entryRow; 
     private int entryColumn = 0;
     private int exitRow; 
@@ -39,7 +39,7 @@ public class Maze {
         try (BufferedReader reader = new BufferedReader(new FileReader(mazeFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                mazetoSolve.add(line);
+                mazeToSolve.add(line);
             }
         }
         findEntry();
@@ -47,16 +47,16 @@ public class Maze {
     }
 
     public int getRows() {
-        return mazetoSolve.size();
+        return mazeToSolve.size();
     }
 
     public int getColumns() {
-        return mazetoSolve.get(0).length();
+        return mazeToSolve.get(0).length();
     }
 
     public void findEntry() { 
         for (int row = 0; row < getRows(); row++) { 
-            if (mazetoSolve.get(row).charAt(0) == ' ') { // first column of maze
+            if (mazeToSolve.get(row).charAt(0) == ' ') { // first column of maze
                 entryRow = row; 
                 entryColumn = 0; 
                 break;
@@ -66,12 +66,25 @@ public class Maze {
 
     public void findExit() { 
         for (int row = 0; row < getRows(); row++) { 
-            if (mazetoSolve.get(row).charAt(getColumns() - 1) == ' ') { // last column of maze
+            if (mazeToSolve.get(row).charAt(getColumns() - 1) == ' ') { // last column of maze
                 exitRow = row; 
                 exitColumn = getColumns() - 1;
                 break;
             }   
         }
     }
+
+    public Boolean validateMove(int row, int column) {
+            if (row < 0 || row >= mazeToSolve.size() || column < 0 || column >= mazeToSolve.get(0).length()) {
+                return false;
+            }
+
+            if (mazeToSolve.get(row).charAt(column) == '#') {
+                return false;
+            }
+
+            return true;
+        }
+
 
 }

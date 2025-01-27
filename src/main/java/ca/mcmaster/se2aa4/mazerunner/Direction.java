@@ -1,11 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class Direction {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private int row;
     private int column;
@@ -47,42 +42,71 @@ public class Direction {
             case "R":
                 return turnRight();
             case "F":
+                moveForward();
                 return currentDirection;
             case " ": 
                 return currentDirection;
             default:
                 throw new Exception("Not a valid direction.");
         }
+        
     }
 
-    private Directions turnRight() throws Exception {
+    public Directions turnRight() {
         switch (currentDirection) {
             case NORTH:
-                return Directions.EAST;
+                currentDirection = Directions.EAST;
+                break;
             case EAST:
-                return Directions.SOUTH;
+                currentDirection = Directions.SOUTH;
+                break;
             case SOUTH:
-                return Directions.WEST;
+                currentDirection = Directions.WEST;
+                break;
             case WEST:
-                return Directions.NORTH;
-            default:
-                throw new Exception("Not a valid direction.");
+                currentDirection = Directions.NORTH;
+                break;
         }
+
+        return currentDirection;
     }
 
-    private Directions turnLeft() throws Exception {
+    public Directions turnLeft() {
         switch (currentDirection) {
             case NORTH:
-                return Directions.WEST;
+                currentDirection = Directions.WEST;
+                break;
             case WEST:
-                return Directions.SOUTH;
+                currentDirection = Directions.SOUTH;
+                break;
             case SOUTH:
-                return Directions.EAST;
+                currentDirection = Directions.EAST;
+                break;
             case EAST:
-                return Directions.NORTH;
-            default:
-                throw new Exception("Not a valid direction.");
+                currentDirection = Directions.NORTH;
+                break;
+        }
+
+        return currentDirection;
+
+    }
+
+    public void moveForward() {
+        switch (currentDirection) {
+            case NORTH:
+                this.row -= 1;
+                break;
+            case EAST:
+                this.column += 1;
+                break;
+            case SOUTH:
+                this.row += 1;
+                break;
+            case WEST:
+                this.column -= 1;
+                break;
         }
     }
 
 }
+

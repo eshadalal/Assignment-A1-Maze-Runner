@@ -1,11 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class Position {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private int row;
     private int column;
@@ -24,7 +19,7 @@ public class Position {
     }
 
 
-    private Position getNextPosition(Direction.Directions direction) throws Exception {
+    public Position getNextPosition(Direction.Directions direction) throws Exception {
         switch (direction) {
             case NORTH:
                 return new Position(this.row - 1, this.column);

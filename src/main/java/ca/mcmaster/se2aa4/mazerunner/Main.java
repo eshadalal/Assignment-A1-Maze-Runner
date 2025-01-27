@@ -48,7 +48,6 @@ public class Main {
             }
 
             Maze maze = new Maze(inputFile); 
-            // displayPath = generatePath.findPath();
 
             if (path != null) { 
                 Path pathToValidate = new Path(maze);
@@ -58,7 +57,7 @@ public class Main {
                     System.out.println("incorrect path");
                 }         
             } 
-            
+
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }

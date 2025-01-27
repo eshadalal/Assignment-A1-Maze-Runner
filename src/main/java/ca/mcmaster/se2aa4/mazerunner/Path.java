@@ -8,10 +8,10 @@ public class Path {
     private static final Logger logger = LogManager.getLogger();
 
     private String path;
-    private Maze maze;
+    private Maze mazeToSolve;
 
-    public Path(Maze maze) {
-        this.maze = maze;
+    public Path(Maze mazeToSolve) {
+        this.mazeToSolve = mazeToSolve;
     }
 
     public String getPath() {
@@ -20,18 +20,15 @@ public class Path {
 
     public String findPath() {
 
-        int entryColumn = maze.getEntryColumn();
-        int entryRow = maze.getEntryRow();
-        int exitColumn = maze.getExitColumn();
-        int exitRow = maze.getExitRow();
+        int entryColumn = mazeToSolve.getEntryColumn();
+        int entryRow = mazeToSolve.getEntryRow();
+        int exitColumn = mazeToSolve.getExitColumn();
+        int exitRow = mazeToSolve.getExitRow();
 
         StringBuilder sequenceOfMoves = new StringBuilder();
 
-        return sequenceOfMoves.toString();
 
-    }
-
-    /* while (entryRow != exitRow && entryColumn != exitColumn) {  // while not at the exit 
+        while (entryRow != exitRow && entryColumn != exitColumn) {   
 
 
 
@@ -40,29 +37,34 @@ public class Path {
 
 
         return sequenceOfMoves.toString();
-    } */
+    } 
+
     public String factorizedPath(String sequenceOfMoves) {
 
-        int forward_count = 1;
-        int left_count = 1;
-        int right_count = 1;
+        StringBuilder factorizedPath = new StringBuilder();
 
-        for (int i = 0; i < sequenceOfMoves.length(); i++) {
+        int count = 1; // count consecutive identical moves
 
-            if (sequenceOfMoves.charAt(i) == 'F' && sequenceOfMoves.charAt(i + 1) == 'F') {
-                forward_count++;
-            } else if (sequenceOfMoves.charAt(i) == 'L' && sequenceOfMoves.charAt(i + 1) == 'L') {
-                left_count++;
-            } else if (sequenceOfMoves.charAt(i) == 'R' && sequenceOfMoves.charAt(i + 1) == 'R') {
-                right_count++;
+        for (int i = 0; i < sequenceOfMoves.length() - 1; i++) {
+
+            if (sequenceOfMoves.charAt(i) == sequenceOfMoves.charAt(i+1)) {
+                count++;
+            } else { 
+                factorizedPath.append(count);
+                factorizedPath.append(sequenceOfMoves.charAt(i));
+                count = 1; // reset count 
             }
+    
         }
 
-        return forward_count + "F" + left_count + "L" + right_count + "R";
+        return factorizedPath.toString();
 
     }
 
     public Boolean validatePath(String pathToValidate) {
+
+        Position currentPosition = new Position(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn());
+        Direction currentDirection = new Direction(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn(), Direction.Directions.EAST);
 
         for (int i = 0; i < pathToValidate.length(); i++) {
             if (pathToValidate.charAt(i) != 'F' && pathToValidate.charAt(i) != 'L' && pathToValidate.charAt(i) != 'R' && pathToValidate.charAt(i) != ' ') {
@@ -73,10 +75,29 @@ public class Path {
                 continue; // skip spaces
             }
 
-            // changeDirection(pathToValidate.charAt(i));
+            switch (pathToValidate.charAt(i)) {
+            case 'F':
+                currentDirection.moveForward();
+                break;
+            case 'L':
+                currentDirection.turnLeft();
+                break;
+            case 'R':
+                currentDirection.turnRight();
+                break;
+            default:
+                return false; // Invalid move
+            }
 
+            if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
+                return false; 
+            }
         }
 
         return true;
-    }
+
+        }
+
+
 }
+
