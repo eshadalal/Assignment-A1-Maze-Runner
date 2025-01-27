@@ -14,6 +14,9 @@ public class Path {
         this.mazeToSolve = mazeToSolve;
     }
 
+    Position currentPosition = new Position(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn());
+    Direction currentDirection = new Direction(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn(), Direction.Directions.EAST);
+
     public String getPath() {
         return this.path;
     }
@@ -27,12 +30,27 @@ public class Path {
 
         StringBuilder sequenceOfMoves = new StringBuilder();
 
+        while (entryRow != exitRow || entryColumn != exitColumn) {   
 
-        while (entryRow != exitRow && entryColumn != exitColumn) {   
+            currentDirection.turnRight(); // attempt to turn right
 
+            if (mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) { 
+                currentDirection.moveForward();
+                sequenceOfMoves.append("R");
 
+            } else { 
+                currentDirection.moveForward(); // otherwise try moving forward
 
+                if (mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) { 
+                    currentDirection.moveForward();
+                    sequenceOfMoves.append("F");
 
+                } else { 
+                    currentDirection.turnLeft(); // if all else fails, turn left
+                    currentDirection.moveForward();
+                    sequenceOfMoves.append("L");
+                }
+            }
         }
 
 
@@ -62,9 +80,6 @@ public class Path {
     }
 
     public Boolean validatePath(String pathToValidate) {
-
-        Position currentPosition = new Position(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn());
-        Direction currentDirection = new Direction(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn(), Direction.Directions.EAST);
 
         for (int i = 0; i < pathToValidate.length(); i++) {
             if (pathToValidate.charAt(i) != 'F' && pathToValidate.charAt(i) != 'L' && pathToValidate.charAt(i) != 'R' && pathToValidate.charAt(i) != ' ') {
