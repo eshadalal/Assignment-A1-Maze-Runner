@@ -82,16 +82,11 @@ public class Maze {
     }
 
     public Boolean validateMove(int row, int column) {
-            if (row < 0 || row >= mazeToSolve.size() || column < 0 || column >= mazeToSolve.get(0).length()) {
-                return false;
-            }
+        if (row < 0 || row >= mazeToSolve.size() || column < 0 || column >= mazeToSolve.get(0).length()) {
+            return false;
+        }
 
-            if (mazeToSolve.get(row).charAt(column) == '#') {
-                return false;
-            }
-
-            return true;
+        return mazeToSolve.get(row).charAt(column) != '#';
     }
-
 
 }

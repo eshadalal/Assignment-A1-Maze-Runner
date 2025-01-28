@@ -33,6 +33,7 @@ public class Main {
 
             if (path != null) { 
                 Path pathToValidate = new Path(maze);
+                logger.info("Path to validate: " + path);
                 if (pathToValidate.validatePath(path)) {
                     System.out.println("correct path");
                 } else {
@@ -50,6 +51,8 @@ public class Main {
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
+            logger.error("Exception: ", e); 
+
         }
 
     }

@@ -23,54 +23,43 @@ public class Path {
     }
 
     public String findPath() throws Exception {
-
         int exitColumn = mazeToSolve.getExitColumn();
         int exitRow = mazeToSolve.getExitRow();
-
         StringBuilder sequenceOfMoves = new StringBuilder();
-
-        while (currentPosition.getRow() != exitRow || currentPosition.getColumn() != exitColumn) {   
-
+        
+        while (currentPosition.getRow() != exitRow || currentPosition.getColumn() != exitColumn) {
             logger.info("Current Position: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
-
-            currentDirection.turnRight(); // attempt to turn right
+            
             Position nextPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
-
             if (mazeToSolve.validateMove(nextPosition.getRow(), nextPosition.getColumn())) {
                 currentDirection.moveForward();
-                sequenceOfMoves.append("R");
+                sequenceOfMoves.append("F");
                 currentPosition = nextPosition;
-
             } else { 
-                
+                currentDirection.turnRight();
                 nextPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
-
-                if (mazeToSolve.validateMove(nextPosition.getRow(), nextPosition.getColumn())) { 
-                    currentDirection.moveForward(); // otherwise try moving forward
-                    sequenceOfMoves.append("F");
-                    currentPosition = nextPosition; 
-
+                if (mazeToSolve.validateMove(nextPosition.getRow(), nextPosition.getColumn())) {
+                    currentDirection.moveForward();
+                    sequenceOfMoves.append("R");
+                    currentPosition = nextPosition;
                 } else { 
-                    currentDirection.turnLeft(); // if all else fails, turn left
+                    currentDirection.turnLeft();
                     nextPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
                     if (mazeToSolve.validateMove(nextPosition.getRow(), nextPosition.getColumn())) {
                         currentDirection.moveForward();
                         sequenceOfMoves.append("L");
                         currentPosition = nextPosition;
+                    }
                 }
             }
-        
-            }
-        
-
+            
             if (currentPosition.getRow() == exitRow && currentPosition.getColumn() == exitColumn) {
-                logger.debug("Exit reached at: (" + exitRow + ", " + exitColumn + ")");
-                break; 
+                break;
             }
         }
 
         return sequenceOfMoves.toString();
-    } 
+    }
 
     public String factorizedPath(String sequenceOfMoves) {
 
@@ -92,8 +81,8 @@ public class Path {
                     factorizedPath.append(count);
                 }
                 
-                factorizedPath.append(sequenceOfMoves.charAt(i)); // Append the move
-                count = 1; // Reset count for the next sequence of moves
+                factorizedPath.append(sequenceOfMoves.charAt(i)); 
+                count = 1; // reset count 
             }
         }
         
@@ -109,64 +98,68 @@ public class Path {
     }
 
     public Boolean validatePath(String pathToValidate) throws Exception {
-
         currentPosition = new Position(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn());
         currentDirection = new Direction(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn(), Direction.Directions.EAST);
-        
-        pathToValidate = pathToValidate.replaceAll(" ", "");
+
+        pathToValidate = pathToValidate.replaceAll(" ", ""); // replace spaces
 
         StringBuilder factorizedToCanonical = new StringBuilder();
 
         for (int i = 0; i < pathToValidate.length(); i++) {
-            
+
             if (Character.isDigit(pathToValidate.charAt(i))) {
-                int count = Character.getNumericValue(pathToValidate.charAt(i));
-                char prevMove = factorizedToCanonical.charAt(factorizedToCanonical.length() - 1);
-                
-                for (int j = 0; j < count - 1; j++) {
-                    factorizedToCanonical.append(prevMove);
+                if (i + 1 >= pathToValidate.length()) {
+                    return false;
                 }
 
+                if (pathToValidate.charAt(i + 1) != 'F' && pathToValidate.charAt(i + 1) != 'L' && pathToValidate.charAt(i + 1) != 'R') {
+                    return false; 
+                }
+
+                int count = Character.getNumericValue(pathToValidate.charAt(i));
+                for (int j = 0; j < count; j++) {
+                    factorizedToCanonical.append(pathToValidate.charAt(i + 1));
+                }
+
+                i++; 
             } else {
-                factorizedToCanonical.append(pathToValidate.charAt(i)); 
+                if (pathToValidate.charAt(i) != 'F' && pathToValidate.charAt(i) != 'L' && pathToValidate.charAt(i) != 'R') {
+                    return false; 
+                }
+
+                factorizedToCanonical.append(pathToValidate.charAt(i));
             }
         }
 
         logger.info("Path to validate: " + factorizedToCanonical.toString());
 
         for (int i = 0; i < factorizedToCanonical.length(); i++) {
-            if (factorizedToCanonical.charAt(i) != 'F' && factorizedToCanonical.charAt(i) != 'L' && factorizedToCanonical.charAt(i) != 'R') {
-                return false; 
-            }
 
             switch (factorizedToCanonical.charAt(i)) {
-            case 'F':
-                currentDirection.moveForward();
-                break;
-            case 'L':
-                currentDirection.turnLeft();
-                break;
-            case 'R':
-                currentDirection.turnRight();
-                break;
-            default:
-                return false; 
-            } 
+                case 'F':
+                    currentDirection.moveForward();
+                    break;
+                case 'L':
+                    currentDirection.turnLeft();
+                    break;
+                case 'R':
+                    currentDirection.turnRight();
+                    break;
+                default:
+                    return false; // Invalid move
+            }
 
             currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
 
             if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
-                return false; 
+                return false; // Invalid move within the maze
             }
         }
 
-        if (currentPosition.getRow() == mazeToSolve.getExitRow() && currentPosition.getColumn() == mazeToSolve.getExitColumn()) {
-            return true; // Path reached the exit
-        } else {
-            return false; // Path did not reach the exit
-        }
+        // Check if the final position matches the maze exit
+        return currentPosition.getRow() == mazeToSolve.getExitRow() &&
+            currentPosition.getColumn() == mazeToSolve.getExitColumn();
     }
-
 
 }
 
