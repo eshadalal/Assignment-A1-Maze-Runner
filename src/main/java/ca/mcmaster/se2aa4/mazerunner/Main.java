@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -22,30 +19,15 @@ public class Main {
         options.addOption("i", true, "maze file to read");
         options.addOption("p", true, "path to validate");
 
-        String displayPath = ""; 
-
         try {
             
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
+
             String path = cmd.getOptionValue("p");
             String inputFile = cmd.getOptionValue("i"); 
 
             logger.info("**** Reading the maze from file " + inputFile);
-            BufferedReader mazeFile = new BufferedReader(new FileReader(inputFile));
-
-            String line; // to be removed 
-            while ((line = mazeFile.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                
-                System.out.print(System.lineSeparator());
-            }
 
             Maze maze = new Maze(inputFile); 
 
@@ -55,15 +37,20 @@ public class Main {
                     System.out.println("correct path");
                 } else {
                     System.out.println("incorrect path");
-                }         
-            } 
+                }      
+
+            } else { 
+                Path pathToFind = new Path(maze);
+                String foundPath = pathToFind.findPath();
+
+                logger.info("**** Computing path");
+                System.out.println(pathToFind.factorizedPath(foundPath));  
+                logger.info("** End of MazeRunner");
+            }
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
 
-        logger.info("**** Computing path");
-        System.out.println(displayPath);  
-        logger.info("** End of MazeRunner");
     }
 }

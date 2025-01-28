@@ -44,6 +44,7 @@ public class Maze {
         }
         findEntry();
         findExit();
+
     }
 
     public int getRows() {
@@ -62,6 +63,9 @@ public class Maze {
                 break;
             }
         }
+
+        System.out.println("Entry position: (" + entryRow + ", " + entryColumn + ")");
+
     } 
 
     public void findExit() { 
@@ -72,6 +76,9 @@ public class Maze {
                 break;
             }   
         }
+        
+        System.out.println("Exit position: (" + exitRow + ", " + exitColumn + ")");
+
     }
 
     public Boolean validateMove(int row, int column) {
@@ -84,7 +91,7 @@ public class Maze {
             }
 
             return true;
-        }
+    }
 
 
 }
