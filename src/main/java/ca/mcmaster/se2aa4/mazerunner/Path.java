@@ -86,22 +86,32 @@ public class Path {
             switch (factorizedToCanonical.charAt(i)) {
                 case 'F':
                     currentDirection.moveForward();
+                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
+                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
+                        return false; 
+                    }   
                     break;
                 case 'L':
                     currentDirection.turnLeft();
+                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
+                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
+                        return false; 
+                    }   
                     break;
                 case 'R':
                     currentDirection.turnRight();
+                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
+                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
+                        return false; 
+                    }   
                     break;
                 default:
                     return false; 
             }
 
-            currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
+            logger.info("Before move: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
+            logger.info("After move: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
 
-            if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
-                return false; 
-            }
         }
         
         logger.info("Final Position: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
