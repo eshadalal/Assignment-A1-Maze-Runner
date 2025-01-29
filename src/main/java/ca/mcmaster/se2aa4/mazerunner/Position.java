@@ -18,7 +18,6 @@ public class Position {
         return this.column;
     }
 
-
     public Position getNextPosition(Direction.Directions direction) throws Exception {
         switch (direction) {
             case NORTH:
@@ -33,4 +32,6 @@ public class Position {
                 throw new Exception("Not a valid direction.");
             }
         }
+
+
 }

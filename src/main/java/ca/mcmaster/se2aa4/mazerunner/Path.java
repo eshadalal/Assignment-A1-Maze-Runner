@@ -33,6 +33,7 @@ public class Path {
                 }
 
                 factorizedPath.append(moves.get(i).getMove()); 
+                factorizedPath.append(" "); 
                 count = 1; // reset count for next move
             }
         }
