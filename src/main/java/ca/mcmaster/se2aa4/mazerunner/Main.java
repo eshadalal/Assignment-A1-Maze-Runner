@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -41,11 +43,12 @@ public class Main {
                 }      
 
             } else { 
-                Path pathToFind = new Path(maze);
-                String foundPath = pathToFind.findPath();
+                RightHand pathToFind = new RightHand(maze);
+                Path pathToPrint = new Path(maze);
+                List<Move> foundPath = pathToFind.findPath();
 
                 logger.info("**** Computing path");
-                System.out.println(pathToFind.factorizedPath(foundPath));  
+                System.out.println(pathToPrint.factorizedPath(foundPath));  
                 logger.info("** End of MazeRunner");
             }
 

@@ -95,12 +95,16 @@ public class Direction {
         switch (currentDirection) {
             case NORTH:
                 this.row -= 1;
+                break;
             case EAST:
                 this.column += 1;
+                break;
             case SOUTH:
                 this.row += 1;
+                break;
             case WEST:
                 this.column -= 1;
+                break;
         }
         
         return new Position(this.row, this.column); 

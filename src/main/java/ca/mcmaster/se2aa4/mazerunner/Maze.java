@@ -64,7 +64,7 @@ public class Maze {
             }
         }
 
-        System.out.println("Entry position: (" + entryRow + ", " + entryColumn + ")");
+        logger.info("Entry position: (" + entryRow + ", " + entryColumn + ")");
 
     } 
 
@@ -77,7 +77,7 @@ public class Maze {
             }   
         }
         
-        System.out.println("Exit position: (" + exitRow + ", " + exitColumn + ")");
+        logger.info("Exit position: (" + exitRow + ", " + exitColumn + ")");
 
     }
 
@@ -86,7 +86,11 @@ public class Maze {
             return false;
         }
 
-        return mazeToSolve.get(row).charAt(column) != '#';
+        if (mazeToSolve.get(row).charAt(column) == '#') { 
+            return false; 
+        }
+
+        return true;
     }
 
 }
