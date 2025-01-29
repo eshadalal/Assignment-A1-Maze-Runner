@@ -93,17 +93,9 @@ public class Path {
                     break;
                 case 'L':
                     currentDirection.turnLeft();
-                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
-                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
-                        return false; 
-                    }   
                     break;
                 case 'R':
                     currentDirection.turnRight();
-                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
-                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
-                        return false; 
-                    }   
                     break;
                 default:
                     return false; 
