@@ -33,7 +33,7 @@ public class Main {
 
             Maze maze = new Maze(inputFile); 
 
-            if (path != null) { 
+            if (path != null) { // if path is provided, validate it
                 Path pathToValidate = new Path(maze);
                 logger.info("Path to validate: " + path);
                 if (pathToValidate.validatePath(path)) {
@@ -42,7 +42,7 @@ public class Main {
                     System.out.println("incorrect path");
                 }      
 
-            } else { 
+            } else { // otherwise, find the path 
                 RightHand pathToFind = new RightHand(maze);
                 Path pathToPrint = new Path(maze);
                 List<Move> foundPath = pathToFind.findPath();

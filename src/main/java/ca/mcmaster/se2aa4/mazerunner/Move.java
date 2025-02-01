@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-// class to handle each move 
+// class to handle each individual move 
 
 public class Move {
     private char move;

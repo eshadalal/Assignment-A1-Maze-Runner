@@ -82,7 +82,7 @@ public class Maze {
     }
 
     public Boolean validateMove(int row, int column) {
-        if (row < 0 || row >= mazeToSolve.size() || column < 0 || column >= mazeToSolve.get(0).length()) {
+        if (row < 0 || row >= mazeToSolve.size() || column < 0 || column >= mazeToSolve.get(0).length()) { // check if move is within bounds
             return false;
         }
 

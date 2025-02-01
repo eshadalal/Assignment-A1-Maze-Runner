@@ -51,7 +51,7 @@ public class Path {
         currentPosition = new Position(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn());
         currentDirection = new Direction(mazeToSolve.getEntryRow(), mazeToSolve.getEntryColumn(), Direction.Directions.EAST);
 
-        pathToValidate = pathToValidate.replaceAll(" ", ""); // replace spaces
+        pathToValidate = pathToValidate.replaceAll(" ", ""); // remove spaces
         StringBuilder factorizedToCanonical = new StringBuilder();
 
         for (int i = 0; i < pathToValidate.length(); i++) {
@@ -86,13 +86,13 @@ public class Path {
             switch (factorizedToCanonical.charAt(i)) {
                 case 'F':
                     currentDirection.moveForward();
-                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
-                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) {
+                    currentPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection()); 
+                    if (!mazeToSolve.validateMove(currentPosition.getRow(), currentPosition.getColumn())) { // check if next position is valid
                         return false; 
                     }   
                     break;
                 case 'L':
-                    currentDirection.turnLeft();
+                    currentDirection.turnLeft(); // don't update position, just turn 
                     break;
                 case 'R':
                     currentDirection.turnRight();

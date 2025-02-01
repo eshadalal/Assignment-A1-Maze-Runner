@@ -18,7 +18,7 @@ public class Position {
         return this.column;
     }
 
-    public Position getNextPosition(Direction.Directions direction) throws Exception {
+    public Position getNextPosition(Direction.Directions direction) throws Exception { // change position based on direction
         switch (direction) {
             case NORTH:
                 return new Position(this.row - 1, this.column);

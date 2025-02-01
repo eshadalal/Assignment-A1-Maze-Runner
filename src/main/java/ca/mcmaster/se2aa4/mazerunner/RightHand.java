@@ -2,6 +2,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +25,7 @@ public class RightHand {
         int exitRow = mazeToSolve.getExitRow();
         List<Move> movesMade = new ArrayList<>();
 
-        while (currentPosition.getRow() != exitRow || currentPosition.getColumn() != exitColumn) {
+        while (currentPosition.getRow() != exitRow || currentPosition.getColumn() != exitColumn) { // while not at exit
             logger.info("Current Position: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
             
             // try turning right first
@@ -43,7 +44,7 @@ public class RightHand {
             } else {
                 currentDirection.changeDirection("L"); // come back to original direction
 
-                // if right is invalid, move back to original direction and try moving forward
+                // if right is invalid, try moving forward
                 nextPosition = currentPosition.getNextPosition(currentDirection.getCurrentDirection());
                 logger.info("Next Position: " + nextPosition.getRow() + " " + nextPosition.getColumn());
                 
@@ -77,12 +78,12 @@ public class RightHand {
                 }
             }
 
-            if (currentPosition.getRow() == exitRow && currentPosition.getColumn() == exitColumn) {
+            if (currentPosition.getRow() == exitRow && currentPosition.getColumn() == exitColumn) { // if exit is reached
                 logger.info("Exit reached: (" + currentPosition.getRow() + ", " + currentPosition.getColumn() + ")");
                 break; // exit the loop if the exit point is reached
             }
         }
 
-        return movesMade;
+        return movesMade; 
     }
 }
